@@ -2,7 +2,7 @@ package mwp202109.cs_learning.dao.domain.DO;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class UserDO {
@@ -10,6 +10,6 @@ public class UserDO {
     private String username;
     private String chineseName;
     private String password;
-    private LocalDate createTime;
-    private LocalDate updateTime;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 }
