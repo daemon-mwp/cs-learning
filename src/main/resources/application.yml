@@ -98,10 +98,17 @@ spring:
     activate:
       on-profile: local
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.31.97:3306/learning?characterEncoding=UTF-8&user=root&password=Mwp@123&failOverReadOnly=false&secondsBeforeRetryMaster=0&queriesBeforeRetryMaster=0&serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&connectTimeout=30000&socketTimeout=30000
+    db1:
+      driverClassName: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://192.168.31.97:3306/learning?characterEncoding=UTF-8&user=root&password=Mwp@123&failOverReadOnly=false&secondsBeforeRetryMaster=0&queriesBeforeRetryMaster=0&serverTimezone=Asia/Shanghai&useUnicode=true&useSSL=false&connectTimeout=30000&socketTimeout=30000
+    ck1:
+      driverClassName: ru.yandex.clickhouse.ClickHouseDriver
+      jdbcUrl: jdbc:clickhouse://192.168.31.97:8123/default
+      username: default
+      password:
+      enabled: true
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 20
       connection-timeout: 30000
       idle-timeout: 30000
       max-lifetime: 30000
