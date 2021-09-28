@@ -18,15 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@Api(tags = "mysql相关练习接口")
-@RequestMapping(("/mysql"))
+@Api(tags = "clickhouse相关练习接口")
+@RequestMapping(("/clickhouse"))
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
-public class MysqlController {
+public class ClickhouseController {
     private final UserMapper userMapper;
 
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/getUser")
-    @DB(DataSourceType.DB1)
+    @DB(DataSourceType.CK1)
     public IPage<UserDO> getUser(@RequestParam @NotNull Long pageNo, @RequestParam @NotNull Long pageSize){
         return userMapper.getAllUser(new Page(pageNo, pageSize));
     }
