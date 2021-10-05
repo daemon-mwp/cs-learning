@@ -167,6 +167,88 @@ JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败�
 
 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
 
+## 原子类（Atomic类）
+
+原子类是具有原子性的类，原子性的意思是对于一组操作，要么全部执行成功，要么全部执行失败，不能只有其中某几个执行成功。
+
+作用和锁有类似之处，是为了保证并发情况下的线程安全。
+
+### 相对于锁的优势
+
+- 粒度更细
+  原子变量可以把竞争范围缩小到变量级别,通常情况下锁的粒度也大于原子变量的粒度
+- 效率更高
+  除了在高并发之外，使用原子类的效率往往比使用同步互斥锁的效率更高，因为原子类底层利用了**CAS**，不会阻塞线程。（所以原子类也不适用于高并发的场景）
+
+### AtomicInteger常用方法
+
+上面列举了J.U.C中提供的一些原子操作类，接下来从简单的AtomicInteger开始分析，来看看它的常用方法，其他的两种AtomicLong、AtomicBoolean和它相似。
+
+| 类型                               | 具体类型                                                     |
+| ---------------------------------- | ------------------------------------------------------------ |
+| Atomic* 基本类型原子类             | AtomicInteger、AtomicLong、AtomicBoolean                     |
+| Atomic*Array 数组类型原子类        | AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray    |
+| Atomic*Reference 引用类型原子类    | AtomicReference、AtomicStampedReference、AtomicMarkableReference |
+| Atomic*FieldUpdater 升级类型原子类 | AtomicIntegerfieldupdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater |
+| Adder 累加器                       | LongAdder、DoubleAdder                                       |
+| Accumulator 积累器                 | LongAccumulator、DoubleAccumulator                           |
+
+### Array 数组类型原子类
+
+AtomicArray 数组类型原子类，数组里的元素，都可以保证其原子性，比如 AtomicIntegerArray 相当于把 AtomicInteger 聚合起来，组合成一个数组。我们如果想用一个每一个元素都具备原子性的数组的话， 就可以使用 AtomicArray。
+| 方法                                          | 作用                                                         |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| public final int get()                        | 获取当前的值                                                 |
+| public final int getAndSet(int newValue)      | 获取当前的值，并设置新的值                                   |
+| public final int getAndIncrement()            | 获取当前的值，并自增+1                                       |
+| public final int getAndDecrement()            | 获取当前的值，并自减-1                                       |
+| public final int getAndAdd(int delta)         | 获取当前的值，并加上预期的值。getAndIncrement和getAndDecrement不满足，可使用当前方法 |
+| boolean compareAndSet(int expect, int update) | 如果输入的数值等于预期值，则以原子方式将该值更新为输入值（update） |
+
+### Atomic*Reference 引用类型原子类
+
+AtomicReference引用类型原子类，作用和AtomicInteger没有本质区别，AtomicReference是让一个对象保持原子性，而不局限一个变量。
+
+该种类所有类型：
+
+| 类名                    | 作用                                                         |
+| ----------------------- | ------------------------------------------------------------ |
+| AtomicReference         | 保证对象的原子性                                             |
+| AtomicStampedReference  | 它是对 AtomicReference 的升级，在此基础上还加了时间戳，用于解决 CAS 的 ABA 问题。 |
+| AtomicMarkableReference | 和 AtomicReference 类似，多了一个绑定的布尔值，可以用于表示该对象已删除等场景。 |
+
+### Atomic*FieldUpdater原子更新器
+
+原子类更新器主要用于对已经声明的非原子变量，为它增加原子性，让该变量拥有CAS操作的能力。
+该种类所有类型：
+
+| 类名                        | 作用                   |
+| --------------------------- | ---------------------- |
+| AtomicIntegerFieldUpdater   | 原子更新整形的更新器   |
+| AtomicLongFieldUpdater      | 原子更新长整形的更新器 |
+| AtomicReferenceFieldUpdater | 原子更新引用的更新器   |
+
+```
+//声明原子更新类，泛型为Score类，更新的是"score"字段
+public static AtomicIntegerFieldUpdater<Score> scoreUpdater = AtomicIntegerFieldUpdater
+        .newUpdater(Score.class, "score");
+```
+
+### 如何改进AtomicLong 在高并发下性能
+
+java8引入的，高并发下LongAdder比AtomicLong（其他基本原子类一样）效率高，不过**本质是空间换时间**
+
+LongAdder引入了分段累加的概念，内部有一个`base`变量和一个`cell[]`共同参与累加计数：
+
+- base变量：竞争不激烈，直接累加到该变量上
+- cell[]：竞争激烈的情况下，各个线程分散累加到自己的槽cell[i]中
+
+因此每个线程之间不需要每次累加都进行同步，只是在每个线程累加完成之后将数据同步到对应的cell[i]中，然后再调用sum()进行统计。
+
+LongAdder在两个方面提高了性能：每次操作无需同步、分段机制降低冲突
+
+**总结：**竞争激烈的时候，LongAdder把不同线程对应到不同的Cell上进行修改，降低了冲突的概率，这是多段锁的概念，提高了并发性。
+
 ## Java8新特性
 
 ### 常用特性
@@ -398,9 +480,35 @@ synchronized 关键字主要有以下几种用法：
 
   创建线程的工厂，可以设定线程名、线程编号等。
 
-## 设计模式
+## Java虚拟机
 
-## 面向对象思想
+### 运行时数据区域
+
+JDK 1.8 之前：
+
+![查看源图像](https://cdn.jsdelivr.net/gh/LoveLifeEveryday/FigureBed@master/typora202003/26/151354-661702.png)
+
+JDK 1.8 ：
+
+![image-20211004221436282](C:\Users\mwp\AppData\Roaming\Typora\typora-user-images\image-20211004221436282.png)
+
+**线程私有的：**
+
+- 程序计数器
+- 虚拟机栈
+- 本地⽅法栈
+
+**线程共享的：**
+
+- 堆
+- ⽅法区
+- 直接内存 (⾮运⾏时数据区的⼀部分)
+
+## 线程创建、状态todo
+
+## 设计模式todo
+
+## 面向对象思想todo
 
 # 二、常见框架
 
@@ -661,6 +769,8 @@ Unix 有五种 I/O 模型：
 同步 I/O 包括阻塞式 I/O（**BIO**）、非阻塞式 I/O**（NIO）**、I/O 复用和信号驱动 I/O ，它们的主要区别在第一个阶段。
 
 非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
+
+## Session和Cookie的区别todo
 
 # 四、系统设计
 
@@ -1487,4 +1597,4 @@ Redis 通过IO 多路复⽤程序 来监听来⾃客户端的⼤量连接（或�
 
 因此，你也不需要担⼼线程安全问题。Redis6.0 的多线程默认是禁⽤的，只使⽤主线程。如需开启需要修改 redis 配置⽂件 redis.conf。
 
-# 六、操作系统
+# 六、操作系统todo
