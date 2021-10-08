@@ -27,6 +27,13 @@ spring:
       idle-timeout: 30000
       max-lifetime: 30000
       minimum-idle: 5
+  zookeeper:
+    server: 192.168.191.118:2181
+    sessionTimeoutMs: 12000
+    connectionTimeoutMs: 12000
+    maxRetries: 3
+    baseSleepTimeMs: 1000
+    path: /test/leader
   redis:
     host: 192.168.191.118
     port: 6379
@@ -112,6 +119,13 @@ spring:
       idle-timeout: 30000
       max-lifetime: 30000
       minimum-idle: 5
+  zookeeper:
+    server: 192.168.31.97:2181
+    sessionTimeoutMs: 12000
+    connectionTimeoutMs: 12000
+    maxRetries: 3
+    baseSleepTimeMs: 1000
+    path: /test/leader
   redis:
     host: 192.168.31.97
     port: 6379
