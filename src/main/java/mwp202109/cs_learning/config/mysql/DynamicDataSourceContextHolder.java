@@ -1,4 +1,4 @@
-package mwp202109.cs_learning.config;
+package mwp202109.cs_learning.config.mysql;
 
 import lombok.extern.slf4j.Slf4j;
 

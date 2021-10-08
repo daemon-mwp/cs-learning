@@ -1,4 +1,4 @@
-package mwp202109.cs_learning.config;
+package mwp202109.cs_learning.config.mysql;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

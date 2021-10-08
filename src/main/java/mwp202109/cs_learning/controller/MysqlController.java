@@ -1,6 +1,5 @@
 package mwp202109.cs_learning.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,7 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import mwp202109.cs_learning.Aspect.DB;
 import mwp202109.cs_learning.cmmmon.RestResponse;
-import mwp202109.cs_learning.config.DataSourceType;
+import mwp202109.cs_learning.config.mysql.DataSourceType;
 import mwp202109.cs_learning.dao.domain.DO.UserDO;
 import mwp202109.cs_learning.dao.domain.Req.MysqlAddUsersReq;
 import mwp202109.cs_learning.dao.domain.Req.MysqlPageBaseReq;
@@ -21,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @RestController
 @Api(tags = "mysql相关接口")

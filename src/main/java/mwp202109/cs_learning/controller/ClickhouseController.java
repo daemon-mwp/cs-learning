@@ -6,7 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import mwp202109.cs_learning.Aspect.DB;
-import mwp202109.cs_learning.config.DataSourceType;
+import mwp202109.cs_learning.config.mysql.DataSourceType;
 import mwp202109.cs_learning.dao.domain.DO.UserDO;
 import mwp202109.cs_learning.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;

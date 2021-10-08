@@ -1,7 +1,7 @@
 package mwp202109.cs_learning.Aspect;
 
 
-import mwp202109.cs_learning.config.DataSourceType;
+import mwp202109.cs_learning.config.mysql.DataSourceType;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,4 @@
-package mwp202109.cs_learning.config;
+package mwp202109.cs_learning.config.mysql;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;

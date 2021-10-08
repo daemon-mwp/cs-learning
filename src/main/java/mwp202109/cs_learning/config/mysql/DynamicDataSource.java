@@ -1,4 +1,4 @@
-package mwp202109.cs_learning.config;
+package mwp202109.cs_learning.config.mysql;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

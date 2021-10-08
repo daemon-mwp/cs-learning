@@ -1,6 +1,6 @@
 package mwp202109.cs_learning.Aspect;
 
-import mwp202109.cs_learning.config.DynamicDataSourceContextHolder;
+import mwp202109.cs_learning.config.mysql.DynamicDataSourceContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
