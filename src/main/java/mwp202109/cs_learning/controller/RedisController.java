@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@Api(tags = "redis相关练习接口")
+@Api(tags = "redis相关接口")
 @RequestMapping(("/redis"))
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class RedisController {

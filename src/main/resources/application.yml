@@ -2,11 +2,10 @@ spring:
   profiles:
     active: dev
 
-#驼峰命名转换
-mybatis:
+mybatis-plus:
   configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
-
 ---
 spring:
   config:

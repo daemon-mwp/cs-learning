@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@Api(tags = "clickhouse相关练习接口")
+@Api(tags = "clickhouse相关接口")
 @RequestMapping(("/clickhouse"))
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
 public class ClickhouseController {

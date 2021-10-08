@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
 
 @RestController
-@Api(tags = "rabbitmq相关练习接口")
+@Api(tags = "rabbitmq相关接口")
 @RequestMapping(("/rabbitmq"))
 @Slf4j
 @AllArgsConstructor(onConstructor = @__({@Autowired}))
