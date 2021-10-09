@@ -20,7 +20,7 @@ public class AllExceptionHandler {
         for (FieldError fieldError : fieldErrorList) {
             message.append(String.format(" %s[%s]", fieldError.getField(), fieldError.getDefaultMessage()));
         }
-        return RestResponse.build(ResponseCode.BAD_PARAM.getCode(), message.toString());
+        return RestResponse.build(ResponseCode.FAIL_450_BAD_PARAM.getCode(), message.toString());
     }
 
     @ExceptionHandler(RuntimeException.class)
