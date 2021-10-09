@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import mwp202109.cs_learning.Aspect.DB;
+import mwp202109.cs_learning.cmmmon.ResponseCode;
 import mwp202109.cs_learning.cmmmon.RestResponse;
 import mwp202109.cs_learning.config.mysql.DataSourceType;
 import mwp202109.cs_learning.dao.domain.DO.UserDO;
@@ -52,7 +53,7 @@ public class MysqlController {
     public RestResponse<String> delUsers(@RequestBody @Validated MysqlPageBaseReq pageBaseReq) {
         QueryWrapper<UserDO> queryWrapper = MysqlUtil.getQueryWrapper(pageBaseReq);
         int count = userMapper.delete(queryWrapper);
-        return RestResponse.success("共删除" + count + "条数据");
+        return RestResponse.build(ResponseCode.SUCCESS_200.getCode(), "共删除" + count + "条数据");
     }
 
     @ApiOperation(value = "批量更新用户")
@@ -60,8 +61,8 @@ public class MysqlController {
     @PostMapping("/updateUsers")
     public RestResponse<String> updateUsers() {
         //UPDATE user SET password=? WHERE (username = ? OR (id = ? OR id = ?))
-        int count = userMapper.update(null, new UpdateWrapper<UserDO>().eq("username","2").or(i -> i.eq("id", 8).or().eq("id", 10)).set("password", "update"));
-        return RestResponse.success("共修改" + count + "条数据");
+        int count = userMapper.update(null, new UpdateWrapper<UserDO>().eq("username", "2").or(i -> i.eq("id", 8).or().eq("id", 10)).set("password", "update"));
+        return RestResponse.build(ResponseCode.SUCCESS_200.getCode(), "共修改" + count + "条数据");
     }
 
     @ApiOperation(value = "用户信息分页查询接口")

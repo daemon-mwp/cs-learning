@@ -12,14 +12,14 @@ public class RestResponse<T>{
      * 无返回值的成功响应
      */
     public static <T> RestResponse<T> success() {
-        return build(ResponseCode.SUCCESS);
+        return build(ResponseCode.SUCCESS_200);
     }
 
     /**
      * 包含返回值的成功相应
      */
     public static <T> RestResponse<T> success(T data) {
-        return build(ResponseCode.SUCCESS, data);
+        return build(ResponseCode.SUCCESS_200, data);
     }
 
     /**
@@ -27,7 +27,7 @@ public class RestResponse<T>{
      * 谨慎使用，接口尽量返回明确的错误信息
      */
     public static <T> RestResponse<T> fail() {
-        return build(ResponseCode.FAIL);
+        return build(ResponseCode.FAIL_500);
     }
 
     /**
@@ -35,7 +35,7 @@ public class RestResponse<T>{
      * @param data 错误信息
      */
     public static <T> RestResponse<T> fail(T data) {
-        return build(ResponseCode.FAIL, data);
+        return build(ResponseCode.FAIL_500, data);
     }
 
     /**
