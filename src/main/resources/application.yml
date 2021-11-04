@@ -98,6 +98,19 @@ spring:
     port: 5672
     username: root
     password: Mwp@123
+  elasticsearch:
+    rest:
+      # aieye es 配置
+      #      uris: http://55.13.100.21:9200,http://55.13.100.120:9200
+      #      username: nlpusr
+      #      password: Pwd#dev123
+      # 基建 ES 配置
+      uris: http://192.168.191.118:9200
+      username: elastic
+      password: Mwp@123
+      connection-timeout: 30000
+      read-timeout: 30000
+      max-result-window: 10000
 ---
 spring:
   config:
@@ -190,3 +203,16 @@ spring:
     port: 5672
     username: root
     password: Mwp@123
+  elasticsearch:
+    rest:
+      # aieye es 配置
+      #      uris: http://55.13.100.21:9200,http://55.13.100.120:9200
+      #      username: nlpusr
+      #      password: Pwd#dev123
+      # 基建 ES 配置
+      uris: http://192.168.31.97:9200
+      username: elastic
+      password: Mwp@123
+      connection-timeout: 5000
+      read-timeout: 120000
+      max-result-window: 10000

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mwp202109.cs_learning.cmmmon.ResponseCode;
 import mwp202109.cs_learning.cmmmon.RestResponse;
 import mwp202109.cs_learning.service.MessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
 
 @RestController
 @Api(tags = "rabbitmq相关接口")
@@ -25,7 +21,7 @@ public class RabbitMqController {
     private final MessagingService messagingService;
 
     @PostMapping("/register")
-        public RestResponse<Object> doRegister(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("name") String name) throws Exception {
+    public RestResponse<Object> doRegister(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("name") String name) throws Exception {
         JSONObject data = new JSONObject();
         data.put("email", email);
         data.put("password", password);
