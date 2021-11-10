@@ -6,6 +6,10 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+rsa:
+  key:
+    pubKeyFile: D:\program\test\id_key_rsa.pub
+    priKeyFile: D:\program\test\id_key_rsa
 ---
 spring:
   config:

@@ -3,10 +3,9 @@ package mwp202109.cs_learning.dao.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import mwp202109.cs_learning.dao.domain.DO.SysUser;
 import mwp202109.cs_learning.dao.domain.DO.UserDO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,4 +32,12 @@ public interface UserMapper extends BaseMapper<UserDO>{
             "</foreach>",
             "</script>"})
     int insertBatchUsers(@Param(value = "list") List<UserDO> list);
+
+    @Select("select * from sys_user where username = #{username}")
+    @Results({
+            @Result(id = true, property = "id", column = "id"),
+            @Result(property = "roles", column = "id", javaType = List.class,
+                    many = @Many(select = "mwp202109.cs_learning.dao.mapper.RoleMapper.findByUid"))
+    })
+    public SysUser findByName(String username);
 }
